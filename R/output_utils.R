@@ -103,10 +103,13 @@ prepare_output_bgm = function (
   if (edge_selection && edge_prior == "Stochastic-Block" && "allocations" %in% names(out)) {
     results$allocations <- out$allocations
     # Requires that summarySBM() is available in namespace
-    sbm_summary <- summarySBM(list(
+    bgms_sbm_obj <- list(
       indicator = results$inclusion_indicator,
-      allocations = results$allocations
-    ), internal_call = TRUE)
+      allocations = results$allocations,
+      arguments = list(edge_prior = edge_prior, save = save, dirichlet_alpha = dirichlet_alpha, lambda = lambda)
+    )
+    class(bgms_sbm_obj) <- "bgms"
+    sbm_summary <- summarySBM(bgms_sbm_obj, internal_call = TRUE)
     results$components <- sbm_summary$components
     results$allocations <- sbm_summary$allocations
   }

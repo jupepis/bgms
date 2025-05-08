@@ -23,7 +23,11 @@ bgm(
   lambda = 1,
   na_action = c("listwise", "impute"),
   save = FALSE,
-  display_progress = TRUE
+  save_main = FALSE,
+  save_pairwise = FALSE,
+  save_indicator = FALSE,
+  display_progress = TRUE,
+  mala = FALSE
 )
 }
 \arguments{
@@ -141,9 +145,12 @@ the mode of the posterior do not have an imputation option, the bgm function
 will automatically switch to \code{interaction_prior = "Cauchy"} and
 \code{adaptive = TRUE}.}
 
-\item{save}{Should the function collect and return all samples from the Gibbs
-sampler (\code{save = TRUE})? Or should it only return the (model-averaged)
-posterior means (\code{save = FALSE})? Defaults to \code{FALSE}.}
+\item{save}{Logical. If true, sampled states for all parameters are returned.
+Deprecated.}
+
+\item{save_main, save_pairwise, save_indicator}{Logical. Enable saving sampled
+states for `main_effects`, `pairwise_effects`, and `indicator`, respectively.
+Default: `FALSE`.}
 
 \item{display_progress}{Should the function show a progress bar
 (\code{display_progress = TRUE})? Or not (\code{display_progress = FALSE})?

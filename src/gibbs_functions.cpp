@@ -2500,10 +2500,10 @@ List run_gibbs_sampler_for_bgm (
 
   // --- Initialize SBM prior if applicable
   if (edge_prior == "Stochastic-Block") {
-    cluster_allocations[0] = 0;
-    cluster_allocations[1] = 1;
+    cluster_allocations(0) = 0;
+    cluster_allocations(1) = 1;
     for (int i = 2; i < num_variables; i++) {
-      cluster_allocations[i] = (R::unif_rand() > 0.5) ? 1 : 0;
+      cluster_allocations(i) = (R::unif_rand() > 0.5) ? 1 : 0;
     }
 
     cluster_prob = block_probs_mfm_sbm(
@@ -2513,7 +2513,7 @@ List run_gibbs_sampler_for_bgm (
 
     for (int i = 0; i < num_variables - 1; i++) {
       for (int j = i + 1; j < num_variables; j++) {
-        theta(i, j) = cluster_prob(cluster_allocations[i], cluster_allocations[j]);
+        theta(i, j) = cluster_prob(cluster_allocations(i), cluster_allocations(j));
         theta(j, i) = theta(i, j);
       }
     }
@@ -2601,7 +2601,6 @@ List run_gibbs_sampler_for_bgm (
       step_size_mala_pairwise, dual_averaging_pairwise,
       initial_step_size_mala_pairwise
     );
-
     // --- Update edge probabilities under the prior (if edge selection is active)
     if (edge_selection) {
       if (edge_prior == "Beta-Bernoulli") {
@@ -2634,7 +2633,7 @@ List run_gibbs_sampler_for_bgm (
 
         for (int i = 0; i < num_variables - 1; i++) {
           for (int j = i + 1; j < num_variables; j++) {
-            theta(i, j) = theta(j, i) = cluster_prob(cluster_allocations[i], cluster_allocations[j]);
+            theta(i, j) = theta(j, i) = cluster_prob(cluster_allocations(i), cluster_allocations(j));
           }
         }
       }
