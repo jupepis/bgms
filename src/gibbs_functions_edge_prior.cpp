@@ -301,7 +301,7 @@ arma::uvec block_allocations_mfm_sbm(arma::uvec cluster_assign,
 
           prob = static_cast<double>(dirichlet_alpha) *
             std::exp(logmarg) *
-            std::exp(log_Vn(no_clusters) - log_Vn(no_clusters - 1));
+            std::exp(log_Vn(no_clusters + 1) - log_Vn(no_clusters));
         }
 
         cluster_prob(c) = prob;
